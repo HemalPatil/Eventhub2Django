@@ -1,0 +1,69 @@
+{%extends "contest/layout/base.djt" %}
+{%block content%}
+<div class="col-md-12" align="center">
+	<h1>Live Poll</h1>
+	{%if sections%}
+		<canvas id="myChart" width="400" height="400"></canvas>
+	{%else%}
+		Sections haven't uploaded yet :D
+	{%endif%}
+</div>
+{%endblock%}
+{%block scripts%}
+<script type="text/javascript">
+	$(document).ready(function(){
+		Chart.defaults.global.responsive = true;
+		var ctx = document.getElementById("myChart").getContext("2d");
+
+		var options={
+		    //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+		    scaleBeginAtZero : true,
+
+		    //Boolean - Whether grid lines are shown across the chart
+		    scaleShowGridLines : true,
+
+		    //String - Colour of the grid lines
+		    scaleGridLineColor : "rgba(0,0,0,.05)",
+
+		    //Number - Width of the grid lines
+		    scaleGridLineWidth : 1,
+
+		    //Boolean - Whether to show horizontal lines (except X axis)
+		    scaleShowHorizontalLines: true,
+
+		    //Boolean - Whether to show vertical lines (except Y axis)
+		    scaleShowVerticalLines: true,
+
+		    //Boolean - If there is a stroke on each bar
+		    barShowStroke : true,
+
+		    //Number - Pixel width of the bar stroke
+		    barStrokeWidth : 2,
+
+		    //Number - Spacing between each of the X value sets
+		    barValueSpacing : 5,
+
+		    //Number - Spacing between data sets within X values
+		    barDatasetSpacing : 1,
+
+		    //String - A legend template
+
+		}
+		var data = {
+		    labels: [{%for sec in section%}"{{sec.section}}",{%endfor%}],
+		    datasets: [
+		        {
+		            label: "My Second dataset",
+		            fillColor: "rgba(151,187,205,0.5)",
+		            strokeColor: "rgba(151,187,205,0.8)",
+		            highlightFill: "rgba(151,187,205,0.75)",
+		            highlightStroke: "rgba(151,187,205,1)",
+		            data: [{%for sec in section%}{{sec.dcount}},{%endfor%}]
+		        },
+		    ]
+		};
+		var myBarChart = new Chart(ctx).Bar(data, options);
+
+	});
+</script>	
+{%endblock%}		

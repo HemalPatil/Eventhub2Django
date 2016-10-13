@@ -1,0 +1,94 @@
+{%extends "webapp/layout/base.djt" %}
+{%block content%}
+<div data-page="index" class="page">
+            <!-- Scrollable page content-->
+            <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+              <div class="searchbar-input">
+                <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
+              </div><a href="#" class="searchbar-cancel">Cancel</a>
+            </form>
+  <!-- Search Bar overlay -->
+            <div class="searchbar-overlay"></div>
+            <br><br>
+            <div class="tabs-swipeable-wrap">
+              <div class="tabs">
+                  <div class="tab page-content active" id="tab1">
+                          <div class="content-block-title">Todays Events</div>
+                          <div class="list-block media-list">
+                          {%if today%}
+                              <ul>
+                               {%for event in today%}
+                                <li>
+                                 <a href="/eventhub/viewevent/{{event.id}}" class="item-link item-content">
+                                  <div class="item-media"><img src="/media/{{event.content.image}}" width="80"></div>
+                                  <div class="item-inner">
+                                   <div class="item-title-row">
+                                      <div class="item-title">{{event.name}}</div>
+                                   </div>
+                                  <div class="item-subtitle">{{event.venue}}</div>
+                                  <div class="item-text">{{event.content.description|slice:":50"}}</div>
+                                  </div>
+                                </a>
+                              </li>
+                              {%endfor%}
+                              </ul>
+                          {%else%}
+                          <p>No events for today</p>
+                          {%endif%}
+                          </div>
+                  </div>
+                  <div class="tab page-content" id="tab2">
+                        <div class="content-block-title">My Events</div>
+                        <div class="list-block media-list list-block-search">
+                        {%if myevents%}
+                            <ul>
+                             {%for event in myevents%}
+                              <li>
+                               <a href="/eventhub/viewevent/{{event.id}}" class="item-link item-content">
+                                <div class="item-media"><img src="/media/{{event.content.image}}" width="80"></div>
+                                <div class="item-inner">
+                                 <div class="item-title-row">
+                                    <div class="item-title">{{event.name}}</div>
+                                 </div>
+                                <div class="item-subtitle">{{event.venue}}</div>
+                                <div class="item-text">{{event.content.description|slice:":50"}}</div>
+                                </div>
+                              </a>
+                            </li>
+                            {%endfor%}
+                            </ul>
+                        {%else%}
+                        <p>No events for today</p>
+                        {%endif%}
+                        </div>
+                  </div>
+                  <div class="tab page-content" id="tab3">
+                          <div class="content-block-title">Upcoming Events</div>
+                           <div class="list-block media-list">
+                          {%if upcoming%}
+                              <ul>
+                               {%for event in upcoming%}
+                                <li>
+                                 <a href="/eventhub/viewevent/{{event.id}}" class="item-link item-content">
+                                  <div class="item-media"><img src="/media/{{event.content.image}}" width="80"></div>
+                                  <div class="item-inner">
+                                   <div class="item-title-row">
+                                      <div class="item-title">{{event.name}}</div>
+                                   </div>
+                                  <div class="item-subtitle">{{event.venue}}</div>
+                                  <div class="item-text">{{event.content.description|slice:":50"}}</div>
+                                  </div>
+                                </a>
+                              </li>
+                              {%endfor%}
+                              </ul>
+                          {%else%}
+                          <p>No events for today</p>
+                          {%endif%}
+                          </div>
+                  </div>
+                </div> 
+                </div> 
+          </div>
+{%endblock%}
+	

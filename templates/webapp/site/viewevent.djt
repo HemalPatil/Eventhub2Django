@@ -1,0 +1,40 @@
+{%extends "webapp/layout/base.djt" %}
+{%block content%}
+<div data-page="index" class="page no-tabbar">
+            <!-- Scrollable page content-->
+            <div class="page-content">
+               <div class="content-block inset" align="center">
+               <div class="row">
+               <div class="col-100 tablet-50">
+                <p><a href="#" data-popup=".popup-img" class="open-popup"><img src="/media/{{event.content.image}}" style="width: 100%"></a></p>
+                </div>
+                <div class="col-100 tablet-50">
+                <h1>{{event.name}}</h1>
+                </div>
+              </div>
+                <div class="content-block-inner">
+                <div class="row">
+    <!-- Each "cell" has col-[widht in percents] class -->
+                {%if event.date_time > today %}
+                    <div class="col-100 tablet-50"><a href="#" class="button button-big button-round">I Am Going </a></div>
+                {%else %}
+                    <div class="col-100 tablet-50"><a href="#" class="button button-big button-round color-orange">Feedback</a></div>
+                {%endif%}
+                    <div class="col-100 tablet-50"><a href="#" class="button button-big button-round">Date: {{event.date_time | date:'d-F-Y'}}</a></div>
+                </div> 
+                  
+                  <p>{{event.content.description}}</p>
+                </div>
+              </div>
+            </div>
+   <!--         <div class="popup popup-img">
+              <div class="content-block">
+                <p>Poster</p>
+                <p><a href="#" class="close-popup">Close popup</a></p>
+                <a href="#" data-popup=".popup-img" class="open-popup"><img src="/media/{{event.content.image}}">
+              </div>
+            </div>  -->
+</div>
+            
+{%endblock%}
+	

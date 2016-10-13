@@ -1,0 +1,78 @@
+{% extends "admin/change_form.html" %}
+{% block after_field_sets %}
+{{ block.super }}
+{% load staticfiles %}
+<script type="text/javascript">
+$(document).ready(function(){
+	var csrftoken = Cookies.get('csrftoken');
+	function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));	
+	}
+	$.ajaxSetup({
+			beforeSend: function(xhr, settings) {
+		    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+		        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+		    }
+		}
+	});
+
+	$.ajax({
+        url : "/geteventd/", // the endpoint
+        type : "POST", // http method
+        data : {'date': $('#id_date_time_0').val() }, // data sent with the post request
+
+        // handle a successful response
+        success : function(json) {
+        	$('#eventsonsameday').empty();
+        	var events=json.events;
+        	console.log(events.length);
+        	for(var i=0;i<events.length;i++)
+        		$('#eventsonsameday').append("<h2>"+events[i]['name']+" at "+events[i]['venue']+"</h2>");
+            console.log(json); 
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log("Error");
+        }
+	});
+
+
+});
+</script>
+<h2>Events on the same day</h2>
+<div id="eventsonsameday" align="center">
+</div>
+<script src="{%static 'js/jquery-2.1.4.min.js'%}" type="text/javascript" charset="utf-8" ></script>
+<script type="text/javascript" src="{%static 'js/js.cookie.js'%}"></script>
+<script type="text/javascript">
+	var lastValue = $('#id_date_time_0').val();
+	setInterval(function() {
+		if(lastValue!=$('#id_date_time_0').val()){
+		$.ajax({
+        url : "/geteventd/", // the endpoint
+        type : "POST", // http method
+        data : {'date': $('#id_date_time_0').val() }, // data sent with the post request
+
+        // handle a successful response
+        success : function(json) {
+        	$('#eventsonsameday').empty();
+        	var events=json.events;
+        	if(events.length == 0)
+        		$('#eventsonsameday').append("<h2>No events on this day</h2>");
+        	for(var i=0;i<events.length;i++)
+        		$('#eventsonsameday').append("<h2>"+events[i]['name']+" at "+events[i]['venue']+"</h2>");
+            console.log(json); 
+            lastValue=$('#id_date_time_0').val();
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log("Error");
+        }
+		});
+	}
+	}, 500);
+</script>
+{% endblock %}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+{%load staticfiles%}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Event Hub</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="{%static 'webapp/css/framework7.ios.css' %}">
+    <link rel="stylesheet" href="{%static 'webapp/css/framework7.ios.colors.min.css' %}">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="{%static 'webapp/css/my-app.css' %}">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" ></script>
+    <meta name="google-signin-client_id" content="714325544070-fmb1uvb62bhe7ot9li3e2r97l2mnskhm.apps.googleusercontent.com"></meta>
+  </head>
+  <body>
+  {%if not login%}
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <!-- Views-->
+    <div class="views">
+      <!-- Your main view, should have "view-main" class-->
+      <div class="view view-main">
+        <!-- Top Navbar-->
+        <div class="navbar">
+          <div class="navbar-inner">
+            <!-- We have home navbar without left link-->
+            <div class="center sliding"><a href="#" class="link icon-only">
+                <img style="height: 80%; width: auto;" src="{%static 'img/logo.png' %}">
+            </a></div>
+            {%if not inner%}
+                <div class="right">
+                    <button class="button" id="signOut">Sign Out</button>
+                </div>
+            {%endif%}
+          </div>
+        </div>
+        <div class="pages navbar-through toolbar-through">
+    {%endif%}
+        {%block content%}
+        {%endblock%}
+    {%if not login%}
+         </div>
+        <!-- Bottom Toolbar-->
+        <!--<div class="toolbar">
+          <div class="toolbar-inner"><a href="#" class="link">Link 1</a><a href="#" class="link">Link 2</a></div>
+        </div> -->
+        <div class="toolbar tabbar tabbar-labels">
+    <div class="toolbar-inner">
+        <a href="#tab1" class="tab-link active">
+        <i class="icon icon-today"></i>
+            <span class="tabbar-label">Todays Events</span>
+        </a>
+        <a href="#tab2" class="tab-link">
+         <i class="icon icon-user"></i>
+            <span class="tabbar-label">My Events</span>
+        </a>
+        <a href="#tab3" class="tab-link">
+            <i class="icon icon-calendar"></i>
+            <span class="tabbar-label">Upcoming Events</span>
+        </a>
+    </div>
+</div>
+      </div>
+    </div>
+    {%endif%}
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="{%static 'webapp/js/framework7.min.js' %}"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="{%static 'webapp/js/my-app.js' %}"></script>
+    <script type="text/javascript" src="{%static 'webapp/js/js.cookie.js' %}"></script>
+<script type="text/javascript" src="{%static 'webapp/js/register.js' %}"></script>
+<script type="text/javascript" src="{%static 'webapp/js/oauth.js' %}"></script>
+<script src="https://apis.google.com/js/client:platform.js?onload=startApp"></script>
+    {%block script%}
+    {%endblock%}
+  </body>
+</html>

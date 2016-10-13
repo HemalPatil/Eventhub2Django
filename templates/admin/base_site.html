@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+{% load staticfiles %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}" style="color: white"><img src="{%static 'img/logo.png' %}" style="position: relative; float:left;max-width:5%;max-height:100%;">Event Hub Admin</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+{# Footer branding name (center) #}
+{% block footer_branding %}
+  Event Hub
+{% endblock %}
+{% block copyright %}
+  Copyright &copy;<br>Developed by <a href="#" target="_blank">OverKnighters</a> 
+{% endblock %}

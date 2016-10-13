@@ -1,0 +1,8 @@
+{%extends "contest/layout/base.djt" %}
+{%block content%}
+<div class="col-md-12" align="center">
+	<h1>Welcome to the First years contest page</h1>
+	<h2>To View the Live Poll <a href="/contest/getresult"> Click here</a></h2>
+</div>
+{%endblock%}
+	

@@ -1,0 +1,41 @@
+{%extends "webapp/layout/base.djt" %}
+{%load staticfiles%}
+{%block content%}
+<!--<div data-page="index" class="page">
+<div class="page-content">
+  <div id="gConnect" align="center">
+    <div id="signin-button"></div>
+  </div>
+  <div id="loaderror">
+    This section will be hidden by jQuery. If you can see this message, you
+    may be viewing the file rather than running a web server.<br />
+    The sample must be run from http or https. See instructions at
+    <a href="https://developers.google.com/+/quickstart/javascript">
+    https://developers.google.com/+/quickstart/javascript</a>.
+  </div> -->
+   <div class="login-screen modal-in">
+      <!-- Default view-page layout -->
+      <div class="view">
+        <div class="page">
+          <!-- page-content has additional login-screen content -->
+          <div class="page-content login-screen-content" align="center" style="padding-top: 10%;">
+            <img src="{% static 'img/logo.png' %}" style="height: 25%; width:auto">
+            <div class="login-screen-title">Event Hub</div>
+            <div id="gConnect" align="center">
+              <div id="signin-button"></div>
+            </div>
+            <div id="loaderror">
+              This section will be hidden by jQuery. If you can see this message, you
+              may be viewing the file rather than running a web server.<br />
+              The sample must be run from http or https. See instructions at
+              <a href="https://developers.google.com/+/quickstart/javascript">
+              https://developers.google.com/+/quickstart/javascript</a>.
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+{%endblock%}

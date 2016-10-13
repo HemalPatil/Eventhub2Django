@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{%load staticfiles%}
+<html>
+<head>
+	<title>Contest</title>
+</head>
+<link rel="stylesheet" type="text/css" href="{%static 'contest/css/bootstrap.min.css' %}">
+
+<body>
+<nav class="navbar navbar-default" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#"><img style="height:100%;width: auto;" src="{%static 'img/logo.png' %}"></a>
+		</div>
+	
+		<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<ul class="nav navbar-nav">
+				<!-- <li class="active"><a href="/">Home</a></li> -->
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+			 <li><a href="#">Results</a></li>
+			 {% if user.is_superuser %}
+			 	<li><a href="/contest/addresult/">Upload for section</a></li>
+			 	<li><a href="/contest/refreshresult/">Refresh Result</a></li>
+			 {%endif%}
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+	<div class="container">
+		<div class="row">
+			<!-- bio -->
+{%block content%}
+{%endblock%}
+	</div>
+	</div>
+<script type="text/javascript" src="{%static 'contest/js/jquery-2.2.0.min.js' %}"></script>
+<script type="text/javascript" src="{%static 'contest/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{%static 'contest/js/Chart.min.js' %}"></script>
+{%block scripts%}
+{%endblock%}
+</body>
+</html>

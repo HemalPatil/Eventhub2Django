@@ -1,0 +1,5 @@
+*.pyc
+*~
+*.sqlite3
+media/*
+eventapp/settings.py

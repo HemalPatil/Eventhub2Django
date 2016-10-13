@@ -1,0 +1,15 @@
+{%load staticfiles%}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{title}}</title>
+	<link rel="stylesheet" type="text/css" href='{%static "css/bootstrap.css"%}'>
+	</head>
+<body>
+	<!-- this is a navbar -->
+{%block content%}
+{%endblock%}
+	<script src="{%static 'js/jquery.js'%}" type="text/javascript" charset="utf-8" ></script>
+	<script src="{%static 'js/bootstrap.js'%}" type="text/javascript" charset="utf-8" ></script>
+</body>
+</html>
