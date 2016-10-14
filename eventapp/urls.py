@@ -30,7 +30,6 @@ urlpatterns = patterns('',
     url(r'^backup/', 'evm.views.download'),
     url(r'^mediabackup/', 'evm.views.download_media'),
     url(r'^sendfeedback/', 'evm.views.sendfeedback'),
-    url(r'^followclub/', 'evm.views.addfollowing'),
     url(r'^addevent/', 'evm.views.addevent'),
     url(r'^delevent/', 'evm.views.delevent'),
     url(r'^updateevent/', 'evm.views.updateevent'),
@@ -39,6 +38,10 @@ urlpatterns = patterns('',
     url(r'^contest/',include('contest.urls')),
     url(r'^eventhub/',include('webapp.urls')),
     url(r'^syncclubs/', 'evm.views.syncclubs'),
-    url(r'^syncevents/', 'evm.views.syncevents')
+    url(r'^syncevents/', 'evm.views.syncevents'),
+    url(r'^followevent/', 'evm.views.followevent'),
+    url(r'^followclub/', 'evm.views.followclub'),
+    url(r'^unfollowevent/', 'evm.views.unfollowevent'),
+    url(r'^unfollowclub/', 'evm.views.unfollowclub')
 
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

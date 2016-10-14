@@ -88,7 +88,7 @@ def syncclubs(request):
 		flag = 0
 		try:
 			user = User.objects.get(username = request.POST['email'])
-		except:
+		except User.DoesNotExist:
 			flag = 1
 		if flag == 0:
 			newclubs = json.loads(request.POST['newclubsjson'])
@@ -107,6 +107,78 @@ def syncclubs(request):
 				response['followed'] = follow
 				responsef.append(response)
 			return JsonResponse(dict(newclubs=responsef))
+	return JsonResponse({'success' : 0})
+
+@csrf_exempt
+def followclub(request):
+	print 'follow club called'
+	if request.method == "POST":
+		print request.POST['email']
+		flag = 0
+		try:
+			user = User.objects.get(username = request.POST['email'])
+		except User.DoesNotExist:
+			flag=1
+		if flag==0:
+			clubexists = 1
+			try:
+				club = Club.objects.get(id=request.POST['clubid'])
+			except Club.DoesNotExist:
+				clubexists = 0
+			if clubexists == 1:
+				# check if already followed, if followed then do nothing
+				# if not already followed add a row in UserFollow
+				# then get all events by that club
+				# check if the user already follows the events by that club
+				# if user does then do nothing else add a row in UserEvents
+				clubfollowed = 1
+				try:
+					followobject = UserFollow.objects.get(user = user, club = club)
+				except UserFollow.DoesNotExist:
+					clubfollowed = 0
+				if clubfollowed==0:
+					UserFollow(user = user, club = club, follow=True).save()
+				clubevents = Event.objects.filter(club = club)
+				for e in clubevents:
+					eventfollowed = 1
+					try:
+						usereventfollow = UserEvents.objects.get(user = user, event = e)
+					except UserEvents.DoesNotExist:
+						eventfollowed = 0
+					if eventfollowed==0:
+						UserEvents(user=user, event = e).save()
+				return JsonResponse({'success' : 1})
+	return JsonResponse({'success' : 0})
+
+@csrf_exempt
+def unfollowevent(request):
+	print 'stupid django unfollowevent'
+
+@csrf_exempt
+def followevent(request):
+	print 'stupid django followevent'
+
+@csrf_exempt
+def unfollowclub(request):
+	if request.method == "POST":
+		print 'unfollow club called ' + request.POST['email']
+		flag =  0
+		try:
+			user = User.objects.get(username = request.POST['email'])
+		except User.DoesNotExist:
+			flag = 1
+		if flag==0:
+			clubexists = 1
+			try:
+				club = Club.objects.get(id=request.POST['clubid'])
+			except Club.DoesNotExist:
+				clubexists = 0
+			if clubexists==1:
+				UserFollow.objects.filter(user = user, club = club).delete()
+				clubevents = Event.objects.filter(club = club)
+				for e in clubevents:
+					UserEvents.objects.get(user=user, event=e).delete()
+				return JsonResponse({'success' : 1})
 	return JsonResponse({'success' : 0})
 
 @csrf_exempt
