@@ -65,6 +65,8 @@ def syncevents(request):
 				response['contact_name_2']=e.contact_name_2
 				response['contact_number_2']=e.contact_number_2
 				response['created_on'] = e.created_on
+				content = Content.objects.get(event=e.id)
+				response['description'] = content.description
 				follow = 1
 				try:
 					userevent = UserEvents.objects.get(event = e.id, user = user.id)
@@ -405,6 +407,7 @@ def addfollowing(request):
 
 @csrf_exempt
 def addevent(request):
+	print 'called after event added before content added'
 	"""
 	Add an event if the user is admin
 	=======input===========
