@@ -111,9 +111,8 @@ def syncclubs(request):
 
 @csrf_exempt
 def followclub(request):
-	print 'follow club called'
 	if request.method == "POST":
-		print request.POST['email']
+		print 'follow club called ' + request.POST['email']
 		flag = 0
 		try:
 			user = User.objects.get(username = request.POST['email'])
@@ -151,14 +150,6 @@ def followclub(request):
 	return JsonResponse({'success' : 0})
 
 @csrf_exempt
-def unfollowevent(request):
-	print 'stupid django unfollowevent'
-
-@csrf_exempt
-def followevent(request):
-	print 'stupid django followevent'
-
-@csrf_exempt
 def unfollowclub(request):
 	if request.method == "POST":
 		print 'unfollow club called ' + request.POST['email']
@@ -178,6 +169,52 @@ def unfollowclub(request):
 				clubevents = Event.objects.filter(club = club)
 				for e in clubevents:
 					UserEvents.objects.get(user=user, event=e).delete()
+				return JsonResponse({'success' : 1})
+	return JsonResponse({'success' : 0})
+
+@csrf_exempt
+def followevent(request):
+	if request.method == "POST":
+		print 'follow event called ' + request.POST['email']
+		userexists = 1
+		try:
+			user = User.objects.get(username = request.POST['email'])
+		except User.DoesNotExist:
+			userexists = 0
+		if userexists==1:
+			eventexists = 1
+			try:
+				event = Event.objects.get(id=request.POST['eventid'])
+			except Event.DoesNotExist:
+				eventexists = 0
+			if eventexists==1:
+				eventfollowed = 1
+				try:
+					eventfollow = UserEvents.objects.get(user=user, event=event)
+				except UserEvents.DoesNotExist:
+					eventfollowed = 0
+				if eventfollowed==0:
+					UserEvents(user=user, event=event).save()
+				return JsonResponse({'success' : 1})
+	return JsonResponse({'success' : 0})
+
+@csrf_exempt
+def unfollowevent(request):
+	if request.method == "POST":
+		print 'unfollow event called ' + request.POST['email']
+		userexists = 1
+		try:
+			user = User.objects.get(username = request.POST['email'])
+		except User.DoesNotExist:
+			userexists = 0
+		if userexists==1:
+			eventexists = 1
+			try:
+				event = Event.objects.get(id=request.POST['eventid'])
+			except Event.DoesNotExist:
+				eventexists = 0
+			if eventexists==1:
+				UserEvents.objects.filter(user=user,event=event).delete()
 				return JsonResponse({'success' : 1})
 	return JsonResponse({'success' : 0})
 

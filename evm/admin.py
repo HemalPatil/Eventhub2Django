@@ -14,6 +14,7 @@ from django.conf import settings
 
 class EventAdmin(admin.ModelAdmin):
 	exclude = ('addedby',)
+
 	def get_queryset(self,request):
 		print "Check"
 		queryset = super(EventAdmin, self).get_queryset(request)
@@ -23,8 +24,8 @@ class EventAdmin(admin.ModelAdmin):
 		else:
 			print "Normal"
 			return queryset.filter(addedby=request.user)    
+	
 	def save_model(self, request, obj, form, change):
-
 		print form.changed_data
 		if getattr(obj, 'addedby', None) is None:
 			print "None"
