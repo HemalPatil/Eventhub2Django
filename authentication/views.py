@@ -166,6 +166,22 @@ def registerfcm(request):
 	return JsonResponse(response)
 
 @csrf_exempt
+def isadmin(request):
+	if request.method == "POST":
+		print 'isadmin called ' + request.POST['email']
+		userexists = 1
+		try:
+			user = User.objects.get(username=request.POST['email'])
+		except User.DoesNotExist:
+			userexists = 0
+		if userexists == 1:
+			if user.is_active and user.is_staff:
+				return JsonResponse({'isadmin' : 1})
+			else:
+				return JsonResponse({'isadmin' : 0})
+	return JsonResponse({'success' : 0})
+
+@csrf_exempt
 def register_webapp(request):
 	'''
 	Input

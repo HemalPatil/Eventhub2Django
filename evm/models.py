@@ -22,16 +22,16 @@ class Club(models.Model):
 
 class Event(models.Model):
     TYPE_CHOICES = (
-        ('event', 'event'),
-        ('workshop', 'workshop'),
-        ('lecture', 'lecture'),
-        ('attraction', 'attraction'),
+        ('event', 'Event'),
+        ('workshop', 'Eorkshop'),
+        ('lecture', 'Lecture'),
+        ('attraction', 'Attraction'),
     )
     SUBTYPE_CHOICES = (
-        ('general', 'general'),
-        ('club', 'club'),
+        ('general', 'General'),
+        ('club', 'Club'),
         ('IG', 'IG'),
-        ('online', 'online'),
+        ('online', 'Online'),
         ('Branch', 'Branch'),
     )
     CLUB_CHOICES = (

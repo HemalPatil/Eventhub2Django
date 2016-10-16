@@ -30,7 +30,7 @@ def sendfeedback(request):
 
 @csrf_exempt
 def syncevents(request):
-	print 'called syncevents'
+	print 'syncevents called'
 	response={}
 	if request.method=="POST":
 		print request.POST['latest_created_on']
@@ -216,6 +216,22 @@ def unfollowevent(request):
 			if eventexists==1:
 				UserEvents.objects.filter(user=user,event=event).delete()
 				return JsonResponse({'success' : 1})
+	return JsonResponse({'success' : 0})
+
+@csrf_exempt
+def addclub(request):
+	if request.method == "POST":
+		print 'add club called ' + request.POST['email']
+		try:
+			user = User.objects.get(username = request.POST['email'])
+			if user.is_active and user.is_staff:
+				newclub = Club(name=request.POST['name'], alias=request.POST['alias'])
+				newclub.save()
+				return JsonResponse({'success' : 1, 'clubid' : newclub.id})
+				# TODO :
+				# send fcm notification to topic 'addclub' so that user is notified about new club creation
+		except User.DoesNotExist:
+			return JsonResponse({'success' : 0})
 	return JsonResponse({'success' : 0})
 
 @csrf_exempt
